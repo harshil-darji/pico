@@ -7,6 +7,13 @@
     "dev": "echo 'start api dev server'",
     "build": "tsc",
     "lint": "echo 'lint api'",
-    "test": "echo 'test api'"
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "fastify": "^5.12.5"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^5.0.3",
+    "vitest": "^5.0.3"
   }
 }
