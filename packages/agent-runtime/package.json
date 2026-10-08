@@ -1,0 +1,13 @@
+{
+  "name": "@bots/agent-runtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc -p .",
+    "dev": "echo 'dev agent-runtime'",
+    "lint": "echo 'lint agent-runtime'",
+    "test": "echo 'test agent-runtime'"
+  }
+}

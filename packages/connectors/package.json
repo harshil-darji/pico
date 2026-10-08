@@ -1,0 +1,13 @@
+{
+  "name": "@bots/connectors",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc -p .",
+    "dev": "echo 'dev connectors'",
+    "lint": "echo 'lint connectors'",
+    "test": "echo 'test connectors'"
+  }
+}

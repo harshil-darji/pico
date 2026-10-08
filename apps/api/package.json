@@ -1,0 +1,12 @@
+{
+  "name": "@bots/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'start api dev server'",
+    "build": "tsc",
+    "lint": "echo 'lint api'",
+    "test": "echo 'test api'"
+  }
+}
