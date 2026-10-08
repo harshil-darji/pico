@@ -14,6 +14,23 @@ add one when it does something a user or client can trigger.
 - **Expected behavior:** `200` with body `{"status":"ok"}`.
 - **Evidence:** `apps/api/src/server.test.ts` assertion output from `pnpm --filter @bots/api test`.
 
+## Core chat loop (Phase 1)
+
+- **Entry points:** `POST /conversations`, `GET /conversations/:id`, `POST /conversations/:id/messages` on `@bots/api`.
+- **Code:** `apps/api/src/routes.ts` (routes + seed helpers), `apps/api/src/server.ts` (registration),
+  `packages/database/prisma/schema.prisma` (schema), `packages/agent-runtime/src/InMemoryAgentRuntime.ts` (simulated agent).
+- **Web UI:** `apps/web/src/App.tsx` creates a conversation on first send, posts messages, and displays
+  the full message list (user + assistant) with timestamps and loading state.
+- **Reproduce:**
+  - API tests: `bin/test apps/api` (8 tests, SQLite-backed, no Docker).
+  - Web tests: `bin/test apps/web` (5 tests, Vitest + Testing Library).
+  - Live: start both servers (`pnpm --filter @bots/api exec tsx src/index.ts` + `pnpm --filter @bots/web dev`),
+    open the web dev URL, type a message, and see the assistant's canned reply.
+- **Expected behavior:** sending a message creates a conversation if needed, persists it in the database,
+  triggers the `InMemoryAgentRuntime` (returns simulated streaming text), and the UI displays both
+  user and assistant messages with correct roles and timestamps.
+- **Evidence:** `apps/api/src/routes.test.ts` and `apps/web/src/App.test.tsx` test output from `bin/test`.
+
 ## Chat UI shell (static, not yet wired to the API)
 
 - **Entry point:** `apps/web` root route, rendered by `App.tsx`.
@@ -22,6 +39,3 @@ add one when it does something a user or client can trigger.
 - **Expected behavior:** sidebar nav + a hardcoded example conversation render. No backend call is made —
   this is layout only. Do not describe this as "chat works" in a PR; it's a static mock.
 - **Evidence:** screenshot from the dev server, or `pnpm --filter @bots/web build` output.
-
-Add the next entry (e.g. "send a chat message end-to-end") once the web UI actually calls the API and the
-API actually calls the agent runtime — that integration doesn't exist yet.

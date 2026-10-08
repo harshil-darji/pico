@@ -4,6 +4,7 @@
     "rootDir": "src",
     "outDir": "dist",
     "baseUrl": ".",
+    "composite": true,
     "paths": {
       "@bots/*": ["../packages/*"]
     }

@@ -12,7 +12,7 @@ Phase and package boundaries follow the structure already laid out in `AGENTS.md
 | Phase | Slice | Touches | State |
 |---|---|---|---|
 | 0 | Scaffold, Prisma schema, `AgentRuntime` interface + in-memory stub, agent-friendly engineering workflow (`AGENTS.md`, CI, `bin/*`) | everything | Done |
-| 1 | Core chat loop: `apps/web` → `apps/api` → `packages/agent-runtime`, persisted via `Conversation`/`Message`, basic single-user session | `apps/web`, `apps/api`, `packages/agent-runtime` | Not started |
+| 1 | Core chat loop: `apps/web` → `apps/api` → `packages/agent-runtime`, persisted via `Conversation`/`Message`, basic single-user session | `apps/web`, `apps/api`, `packages/agent-runtime` | Done |
 | 2 | Real agent adapter (e.g. Claude or Pi) behind `AgentRuntime`, model/secret config per bot | `packages/agent-adapters` | Not started (empty stub) |
 | 3 | Bot management: create/edit/configure a bot, multi-bot UI, ownership via `Bot`/`User` | `apps/api`, `apps/web`, `packages/database` | Not started (schema only) |
 | 4 | Real auth + multi-tenancy, per-user data isolation | `apps/api`, `packages/security` | Not started (empty stub) |
