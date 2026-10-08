@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+if [ $# -eq 0 ]; then
+  echo "Usage: bin/test <package-name-or-path> [-- <extra args>]"
+  echo "Example: bin/test @bots/agent-runtime"
+  echo "Example: bin/test packages/agent-runtime"
+  echo "Runs lint+test scoped to one package. For the full repo, use bin/verify."
+  exit 1
+fi
+
+target="$1"
+shift || true
+
+if [[ "$target" == */* ]]; then
+  filter="--filter=./$target"
+else
+  filter="--filter=$target"
+fi
+
+pnpm turbo run lint test "$filter" "$@"

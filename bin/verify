@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -uo pipefail
+cd "$(dirname "$0")/.."
+
+json=false
+for arg in "$@"; do
+  [ "$arg" = "--json" ] && json=true
+done
+
+steps=(build lint test)
+results=()
+overall_ok=true
+
+for step in "${steps[@]}"; do
+  out=$(pnpm "$step" 2>&1)
+  code=$?
+  if [ $code -eq 0 ]; then
+    results+=("{\"step\":\"$step\",\"ok\":true}")
+  else
+    overall_ok=false
+    failed_pkg=$(echo "$out" | grep -oE '^Failed:\s+\S+' | head -1 | sed -E 's/^Failed:\s+//')
+    [ -z "$failed_pkg" ] && failed_pkg="unknown"
+    failed_pkg_name="${failed_pkg%%#*}"
+    tail_out=$(echo "$out" | tail -20 | sed ':a;N;$!ba;s/\n/\\n/g' | sed 's/"/\\"/g')
+    results+=("{\"step\":\"$step\",\"ok\":false,\"failingComponent\":\"$failed_pkg\",\"nextStep\":\"run: pnpm --filter $failed_pkg_name $step\",\"tail\":\"$tail_out\"}")
+    if ! $json; then
+      echo "FAIL: $step ($failed_pkg)"
+      echo "$out" | tail -20
+      echo "Next step: pnpm --filter $failed_pkg_name $step"
+    fi
+    break
+  fi
+done
+
+if $json; then
+  printf '{"ok":%s,"steps":[%s]}\n' "$overall_ok" "$(IFS=,; echo "${results[*]}")"
+else
+  if $overall_ok; then
+    echo "verify: build, lint, test all passed"
+  fi
+fi
+
+$overall_ok

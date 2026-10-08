@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+set -uo pipefail
+cd "$(dirname "$0")/.."
+
+base="${1:-main}"
+
+echo "=== Independent review against $base ==="
+echo
+echo "This reproduces the change from scratch. It does not read or trust any"
+echo "summary written by whoever made the change."
+echo
+
+echo "--- diff stat ---"
+git diff --stat "$base"...HEAD
+echo
+
+changed_files=$(git diff --name-only "$base"...HEAD)
+echo "--- files changed ---"
+echo "$changed_files"
+echo
+
+src_changed=$(echo "$changed_files" | grep -E '\.(ts|tsx)$' | grep -v '\.test\.' || true)
+test_changed=$(echo "$changed_files" | grep -E '\.test\.(ts|tsx)$' || true)
+if [ -n "$src_changed" ] && [ -z "$test_changed" ]; then
+  echo "NOTE: source files changed but no test file changed in this diff."
+  echo "      This is not automatically a failure, but check whether the"
+  echo "      changed behavior is actually covered by an existing test."
+  echo
+fi
+
+echo "--- running bin/verify (fresh, not the implementer's reported result) ---"
+if ./bin/verify; then
+  verify_ok=true
+else
+  verify_ok=false
+fi
+echo
+
+if [ -f PR_ACCEPTANCE.md ]; then
+  echo "--- stated acceptance criteria (PR_ACCEPTANCE.md) ---"
+  cat PR_ACCEPTANCE.md
+  echo
+  echo "Manually confirm each criterion above against the diff and verify output."
+fi
+
+echo "=== summary ==="
+if $verify_ok; then
+  echo "verify: PASS"
+else
+  echo "verify: FAIL — see output above for the failing component and next step"
+fi
+echo "This script only reproduces checks and surfaces discrepancies for a human"
+echo "or CI gate to judge. It does not itself approve or merge anything."
+
+$verify_ok

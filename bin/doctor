@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+json=false
+[ "${1:-}" = "--json" ] && json=true
+
+checks=()
+add_check() {
+  checks+=("{\"name\":\"$1\",\"ok\":$2,\"detail\":\"$3\"}")
+}
+
+ok=true
+
+node_version=$(node --version 2>/dev/null || echo "missing")
+node_major=$(echo "$node_version" | sed -E 's/^v([0-9]+).*/\1/')
+if [[ "$node_version" != "missing" && "$node_major" -ge 20 ]]; then
+  add_check "node" true "$node_version"
+else
+  add_check "node" false "need >=20, found $node_version"
+  ok=false
+fi
+
+pnpm_version=$(pnpm --version 2>/dev/null || echo "missing")
+if [ "$pnpm_version" != "missing" ]; then
+  add_check "pnpm" true "$pnpm_version"
+else
+  add_check "pnpm" false "pnpm not found on PATH"
+  ok=false
+fi
+
+if command -v docker >/dev/null 2>&1; then
+  add_check "docker" true "$(docker --version)"
+else
+  add_check "docker" false "docker not found on PATH (needed for local postgres/redis)"
+fi
+
+for svc in postgres redis; do
+  state=$(docker compose -f "$(dirname "$0")/../docker-compose.yml" ps --status running --services 2>/dev/null | grep -x "$svc" || true)
+  if [ -n "$state" ]; then
+    add_check "service:$svc" true "running"
+  else
+    add_check "service:$svc" false "not running (start with: docker compose up -d $svc)"
+  fi
+done
+
+for var in DATABASE_URL REDIS_URL; do
+  if [ -n "${!var:-}" ]; then
+    add_check "env:$var" true "set"
+  else
+    add_check "env:$var" false "not set in current shell (see .env.example)"
+  fi
+done
+
+if $json; then
+  printf '{"ok":%s,"checks":[%s]}\n' "$ok" "$(IFS=,; echo "${checks[*]}")"
+else
+  echo "pico doctor"
+  for c in "${checks[@]}"; do
+    name=$(echo "$c" | sed -E 's/.*"name":"([^"]+)".*/\1/')
+    okv=$(echo "$c" | sed -E 's/.*"ok":([a-z]+).*/\1/')
+    detail=$(echo "$c" | sed -E 's/.*"detail":"([^"]*)".*/\1/')
+    mark="ok "
+    [ "$okv" = "false" ] && mark="!! "
+    printf "  %s%-16s %s\n" "$mark" "$name" "$detail"
+  done
+fi
+
+$ok || exit 1
