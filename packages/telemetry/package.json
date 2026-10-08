@@ -1,0 +1,13 @@
+{
+  "name": "@bots/telemetry",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc -p .",
+    "dev": "echo 'dev telemetry'",
+    "lint": "echo 'lint telemetry'",
+    "test": "echo 'test telemetry'"
+  }
+}
