@@ -1,1 +1,30 @@
-node_modules/\ndist/\n.env\n*.log
+node_modules/
+dist/
+.env
+*.log
+
+# Turborepo
+.turbo/
+
+# Environment files
+.env.*
+!.env.example
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.tsbuildinfo
+
+# Docker
+docker-compose.override.yml
+
+# pnpm
+.pnpm-store/

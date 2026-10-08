@@ -1,0 +1,13 @@
+{
+  "name": "@bots/events",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc -p .",
+    "dev": "echo 'dev events'",
+    "lint": "echo 'lint events'",
+    "test": "echo 'test events'"
+  }
+}
