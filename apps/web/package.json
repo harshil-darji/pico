@@ -1,0 +1,12 @@
+{
+  "name": "@bots/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'start web dev server'",
+    "build": "tsc",
+    "lint": "echo 'lint web'",
+    "test": "echo 'test web'"
+  }
+}
