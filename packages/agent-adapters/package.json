@@ -7,7 +7,6 @@
   "scripts": {
     "build": "tsc -p .",
     "dev": "echo 'dev agent-adapters'",
-    "lint": "echo 'lint agent-adapters'",
-    "test": "echo 'test agent-adapters'"
+    "lint": "eslint ."
   }
 }

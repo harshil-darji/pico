@@ -7,7 +7,6 @@
   "scripts": {
     "build": "tsc -p .",
     "dev": "echo 'start worker dev'",
-    "lint": "echo 'lint worker'",
-    "test": "echo 'test worker'"
+    "lint": "eslint ."
   }
 }

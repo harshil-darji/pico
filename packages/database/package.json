@@ -13,7 +13,7 @@
   "scripts": {
     "build": "tsc -p .",
     "dev": "echo 'dev database'",
-    "lint": "echo 'lint database'",
-    "test": "echo 'test database'"
+    "lint": "eslint .",
+    "test": "DATABASE_URL=\"postgresql://validate:validate@localhost:5432/validate\" prisma validate --schema=prisma/schema.prisma"
   }
 }

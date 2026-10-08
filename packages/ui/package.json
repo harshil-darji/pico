@@ -7,7 +7,6 @@
   "scripts": {
     "build": "tsc -p .",
     "dev": "echo 'dev ui'",
-    "lint": "echo 'lint ui'",
-    "test": "echo 'test ui'"
+    "lint": "eslint ."
   }
 }

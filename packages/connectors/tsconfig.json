@@ -8,8 +8,5 @@
       "@bots/*": ["../packages/*"]
     }
   },
-  "include": ["src"],
-  "references": [
-    { "path": "../events" }
-  ]
+  "include": ["src"]
 }

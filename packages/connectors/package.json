@@ -7,7 +7,6 @@
   "scripts": {
     "build": "tsc -p .",
     "dev": "echo 'dev connectors'",
-    "lint": "echo 'lint connectors'",
-    "test": "echo 'test connectors'"
+    "lint": "eslint ."
   }
 }

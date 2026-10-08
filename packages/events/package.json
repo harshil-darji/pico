@@ -7,7 +7,6 @@
   "scripts": {
     "build": "tsc -p .",
     "dev": "echo 'dev events'",
-    "lint": "echo 'lint events'",
-    "test": "echo 'test events'"
+    "lint": "eslint ."
   }
 }

@@ -3,7 +3,7 @@ import {
   SessionId,
   AgentSession,
 } from './types.js';
-import { AgentRuntime, CreateSessionOptions, SessionInfo } from './AgentRuntime.js';
+import { AgentRuntime, CreateSessionOptions } from './AgentRuntime.js';
 
 class AsyncQueue<T> {
   private items: T[] = [];
@@ -42,7 +42,7 @@ class AsyncQueue<T> {
 export class InMemoryAgentRuntime implements AgentRuntime {
   private sessions = new Map<SessionId, { session: AgentSession; queue: AsyncQueue<RuntimeEvent> }>();
 
-  async createSession(opts?: CreateSessionOptions): Promise<SessionId> {
+  async createSession(_opts?: CreateSessionOptions): Promise<SessionId> {
     const sessionId: SessionId = `session-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
     const now = new Date();
 

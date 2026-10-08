@@ -7,7 +7,6 @@
   "scripts": {
     "build": "tsc -p .",
     "dev": "echo 'dev security'",
-    "lint": "echo 'lint security'",
-    "test": "echo 'test security'"
+    "lint": "eslint ."
   }
 }

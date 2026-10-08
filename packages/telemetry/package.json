@@ -7,7 +7,6 @@
   "scripts": {
     "build": "tsc -p .",
     "dev": "echo 'dev telemetry'",
-    "lint": "echo 'lint telemetry'",
-    "test": "echo 'test telemetry'"
+    "lint": "eslint ."
   }
 }

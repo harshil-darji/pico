@@ -7,7 +7,6 @@
   "scripts": {
     "build": "tsc -p .",
     "dev": "echo 'dev memory'",
-    "lint": "echo 'lint memory'",
-    "test": "echo 'test memory'"
+    "lint": "eslint ."
   }
 }

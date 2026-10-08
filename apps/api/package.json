@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "echo 'start api dev server'",
     "build": "tsc",
-    "lint": "echo 'lint api'",
+    "lint": "eslint .",
     "test": "vitest run"
   },
   "dependencies": {
