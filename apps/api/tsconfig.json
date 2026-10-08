@@ -4,6 +4,7 @@
     "rootDir": "src",
     "outDir": "dist",
     "baseUrl": ".",
+    "types": ["vitest/globals"],
     "paths": {
       "@bots/*": ["../../packages/*"]
     }
