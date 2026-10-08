@@ -187,6 +187,10 @@ These are not checked by any script and need a human (or careful agent) read:
 
 ## Merging
 
-Human approval is required to merge, and for anything production-impacting. Auto-merge is not enabled.
+This is a solo-maintained repo, so "human approval" means the maintainer reads the diff and
+`bin/review-diff` output before merging — not a second GitHub reviewer, which GitHub can't provide anyway
+(a PR author can't approve their own PR). Branch protection on `main` requires the `verify` CI check to
+pass; it does not require a review count, because there's no one else to provide one. Auto-merge is not
+enabled — merging is still a manual, deliberate action, just not gated on a reviewer that doesn't exist.
 This stays true until this repo has a longer track record of CI actually catching real breakage and a
 tested rollback path — neither exists yet (there is no deployment pipeline at all today).
