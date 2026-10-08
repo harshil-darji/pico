@@ -1,4 +1,3 @@
-// @ts-check
 import ts from '@typescript-eslint/utils/ts-eslint';
 
 export default ts.config(

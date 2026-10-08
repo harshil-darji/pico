@@ -3,7 +3,6 @@ export default function App() {
 
   return (
     <div className="flex h-screen w-full bg-gray-50 text-gray-900 font-sans">
-      {/* Sidebar */}
       <aside className="flex w-56 flex-col border-r border-gray-200 bg-white">
         <div className="flex items-center gap-2 px-4 pt-4 pb-3">
           <div className="flex h-8 w-8 items-center justify-center rounded-md bg-violet-600 text-sm font-bold text-white">
@@ -33,9 +32,7 @@ export default function App() {
         </div>
       </aside>
 
-      {/* Main chat area */}
       <main className="flex flex-1 flex-col">
-        {/* Header */}
         <header className="flex items-center justify-between border-b border-gray-200 bg-white px-6 py-3">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-100 text-lg font-semibold text-violet-700">
@@ -52,10 +49,8 @@ export default function App() {
           </span>
         </header>
 
-        {/* Message list */}
         <div className="flex-1 overflow-y-auto bg-gray-50 px-6 py-4">
           <div className="mx-auto max-w-3xl space-y-4">
-            {/* Bot message */}
             <div className="flex gap-3">
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-violet-100 text-xs font-semibold text-violet-700">
                 A
@@ -70,7 +65,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* User message */}
             <div className="flex justify-end gap-3">
               <div className="rounded-2xl rounded-tr-sm bg-violet-600 px-4 py-2.5 max-w-lg">
                 <p className="text-sm leading-relaxed text-white">
@@ -84,7 +78,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Bot message with markdown-like content */}
             <div className="flex gap-3">
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-violet-100 text-xs font-semibold text-violet-700">
                 A
@@ -113,7 +106,6 @@ export default function App() {
           </div>
         </div>
 
-        {/* Input bar */}
         <div className="border-t border-gray-200 bg-white px-6 py-3">
           <div className="mx-auto max-w-3xl flex items-center gap-3 rounded-xl border border-gray-300 bg-white px-4 py-2.5 shadow-sm focus-within:border-violet-400 focus-within:ring-1 focus-within:ring-violet-300 transition">
             <input

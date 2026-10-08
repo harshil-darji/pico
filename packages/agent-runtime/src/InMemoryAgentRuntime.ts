@@ -5,7 +5,6 @@ import {
 } from './types.js';
 import { AgentRuntime, CreateSessionOptions, SessionInfo } from './AgentRuntime.js';
 
-/** Simple async queue backed by a Promise that resolves when data is available. */
 class AsyncQueue<T> {
   private items: T[] = [];
   private resolvers: Array<(v: T) => void> = [];
@@ -40,7 +39,6 @@ class AsyncQueue<T> {
   }
 }
 
-/** An in-memory stub runtime for development / testing. No real LLM calls. */
 export class InMemoryAgentRuntime implements AgentRuntime {
   private sessions = new Map<SessionId, { session: AgentSession; queue: AsyncQueue<RuntimeEvent> }>();
 
@@ -85,7 +83,6 @@ export class InMemoryAgentRuntime implements AgentRuntime {
         const evt = await entry.queue.pop();
         yield evt;
       } catch {
-        // queue closed
         break;
       }
     }
@@ -114,9 +111,7 @@ export class InMemoryAgentRuntime implements AgentRuntime {
     }
   }
 
-  async compactContext(_sessionId: SessionId): Promise<void> {
-    // Stub
-  }
+  async compactContext(_sessionId: SessionId): Promise<void> {}
 
   async listTools(): Promise<string[]> {
     return ['echo'];
@@ -126,9 +121,7 @@ export class InMemoryAgentRuntime implements AgentRuntime {
     return { inputTokens: 0, outputTokens: 0 };
   }
 
-  async recoverSession(_sessionId: SessionId): Promise<void> {
-    // Stub — in-memory sessions are always recoverable
-  }
+  async recoverSession(_sessionId: SessionId): Promise<void> {}
 
   async destroySession(sessionId: SessionId): Promise<void> {
     const entry = this.sessions.get(sessionId);
